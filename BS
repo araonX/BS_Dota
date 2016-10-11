@@ -13,7 +13,7 @@ from htmlentitydefs import name2codepoint
 import re
 import types
 from bs4 import BeautifulSoup
-import MySQLdb
+#import MySQLdb
 #import urllib.request as request
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -45,53 +45,59 @@ third = []
 data1 =  soup.tr.stripped_strings
 for child in data1:
 	 first.append(child)
+if len(first)!=7:
+	first.insert(1,u'0')
 print first
 data2  = soup.tr.next_sibling.stripped_strings
 data2  = soup.tr.find_next_sibling().stripped_strings
 for child2 in data2:
 	second.append(child2)
+if len(second)!=7:
+	second.insert(1,u'0')
 print second
 #print second
 data3 =  soup.find_all("tr",limit=10)
 for i in range (2,3):
 	for child in data3[i].stripped_strings:
 		third.append(child)
+if len(third)!=7:
+	third.insert(1,u'0')
 print third
 
 #print third
-conn = MySQLdb.connect(
-	host = 'localhost',
-	port = 3316,
-	user = 'root',
-	passwd = 'mysql',
-	db = 'STEAM_Data' 
-	)
-cursor = conn.cursor()
+#conn = MySQLdb.connect(
+#	host = 'localhost',
+#	port = 3316,
+#	user = 'root',
+#	passwd = 'mysql',
+#	db = 'STEAM_Data' 
+#	)
+#cursor = conn.cursor()
 #cursor.execute("show tables")
-sql0 = """CREATE TABLE Data(
-	RANK INT(3) NOT NULL PRIMARY KEY,
-	SCORE INT(5) NOT NULL,
-	NAME CHAR(10),
-	TEAM CHAR(10),
-	BEST_RANK INT(5),
-	BEST_SCORE INT(5))"""
-sql1 = "UPDATE  Data SET RANK='%d',SCORE='%d',NAME='%s',TEAM='%s',BEST_RANK='%d',BEST_SCORE='%d' WHERE RANK = 1" % (int(first[0]),int(first[1]),str(first[2]),str(first[3]),int(first[4]),int(first[5])) 
-sql2 = "UPDATE  Data SET RANK='%d',SCORE='%d',NAME='%s',TEAM='%s',BEST_RANK='%d',BEST_SCORE='%d' WHERE RANK = 2" % (int(second[0]),int(second[1]),str(second[2]),str(second[3]),int(second[4]),int(second[5]))
-try:
+#sql0 = """CREATE TABLE Data(
+#	RANK INT(3) NOT NULL PRIMARY KEY,
+#	SCORE INT(5) NOT NULL,
+#	NAME CHAR(10),
+#	TEAM CHAR(10),
+#	BEST_RANK INT(5),
+#	BEST_SCORE INT(5))"""
+#sql1 = "UPDATE  Data SET RANK='%d',SCORE='%d',NAME='%s',TEAM='%s',BEST_RANK='%d',BEST_SCORE='%d' WHERE RANK = 1" % (int(first[0]),int(first[1]),str(first[2]),str(first[3]),int(first[4]),int(first[5])) 
+#sql2 = "UPDATE  Data SET RANK='%d',SCORE='%d',NAME='%s',TEAM='%s',BEST_RANK='%d',BEST_SCORE='%d' WHERE RANK = 2" % (int(second[0]),int(second[1]),str(second[2]),str(second[3]),int(second[4]),int(second[5]))
+#try:
 
-	cursor.execute(sql1)
-	conn.commit()
-except:
-	conn.rollback()
-try:
-	cursor.execute(sql2)
-	conn.commit()
-except:
-	conn.rollback()
+#	cursor.execute(sql1)
+#	conn.commit()
+#except:
+#	conn.rollback()
+#try:
+#	cursor.execute(sql2)
+#	conn.commit()
+#except:
+#	conn.rollback()
 #row = cursor.fetchone()
 #print "server version",row[0]
-cursor.close()
-conn.close()
+#cursor.close()
+#conn.close()
 ##############################################################
 def _format_addr(s):
 	name,addr=parseaddr(s)
@@ -104,13 +110,13 @@ to_addr = '568867090@qq.com'
 smtp_server = 'smtp.163.com'
 #msg = MIMEText(str(third),'plain','utf-8')
 #<tr><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>
-content = '<html><body><table border=1><tbody><tr><td>RANK</td><td>SCORE</td><td>NAME</td><td>TEAM</td><td>BEST_RANK</td><td>BEST_SCORE</td></tr><tr><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr><tr><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr><tr><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr></tbody></table></body></html>' % (int(first[0]),int(first[1]),str(first[2]),str(first[3]),int(first[4]),int(first[5]),int(second[0]),int(second[1]),str(second[2]),str(second[3]),int(second[4]),int(second[5]),int(third[0]),int(third[1]),str(third[2]),str(third[3]),int(third[4]),int(third[5]))
+content = '<html><body><table border=1><tbody><tr><td>RANK</td><td>RANK_CHANGE</td><td>SCORE</td><td>NAME</td><td>TEAM</td><td>BEST_RANK</td><td>BEST_SCORE</td></tr><tr><td>%d</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr><tr><td>%d</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr><tr><td>%d</td><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr></tbody></table></body></html>' % (int(first[0]),int(first[1]),int(first[2]),str(first[3]),str(first[4]),int(first[5]),int(first[6]),int(second[0]),int(second[1]),int(second[2]),str(second[3]),str(second[4]),int(second[5]),int(second[6]),int(third[0]),int(third[1]),int(third[2]),str(third[3]),str(third[4]),int(third[5]),int(third[6]))
 msg = MIMEText(content,'html','utf-8')
 
 #msg = MIMEText('<html><body><table border=1><tbody><tr><td>RANK</td><td>SCORE</td><td>NAME</td><td>TEAM</td><td>BEST_RANK</td><td>BEST_SCORE</td></tr></tbody></table></body></html>','html','utf-8')
 msg['From'] = _format_addr(u'STEAM<%s>' % from_addr)
 msg['To'] = _format_addr(u'administrator <%s>' % to_addr )
-msg['Subject'] =Header(u'from STEAM_Data ...', 'utf-8').encode()
+msg['Subject'] =Header(u'From Steam_Ladder', 'utf-8').encode()
 server = smtplib.SMTP(smtp_server,25)
 server.set_debuglevel(1)
 server.login(from_addr,password)
