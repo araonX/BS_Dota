@@ -20,6 +20,7 @@ sys.setdefaultencoding('utf-8')
 def get_page(Purl):
 	url = Purl
 	req = urllib2.Request(url)
+	req.add_header('User-Agent','Mozilla/6.0(iphone: CPU iphone OS 8_0 like Mac OS X) AppleWebKit/5.3.6.26(KHTML,like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25')
 	response = urllib2.urlopen(req) 
 	the_page= response.read()
 	return the_page
