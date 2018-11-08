@@ -104,9 +104,9 @@ def _format_addr(s):
 	return formataddr(( \
 		Header(name,'utf-8').encode(), \
 		addr.encode('utf-8') if isinstance(addr,unicode) else addr))
-from_addr = '18202597561@163.com'
-password = 'xiejianguang12'
-to_addr = '568867090@qq.com'
+from_addr = 
+password = 
+to_addr = 
 smtp_server = 'smtp.163.com'
 #msg = MIMEText(str(third),'plain','utf-8')
 #<tr><td>%d</td><td>%d</td><td>%s</td><td>%s</td><td>%d</td><td>%d</td></tr>
